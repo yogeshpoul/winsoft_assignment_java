@@ -185,4 +185,4 @@ class DuplicateCharacters {
         System.out.println("Input String: " + inputString);
         findDuplicates(inputString);
     }
-
+}

@@ -1,0 +1,181 @@
+Q1: Merge two arrays by satisfying given constraints
+Given two sorted arrays X[] and Y[] of size m and n each where m >= n and X[] has exactly n vacant cells,
+ merge elements of Y[] in their correct position in array X[], i.e., merge (X, Y) by keeping the sorted order.
+
+For example,
+
+Input: X[] = { 0, 2, 0, 3, 0, 5, 6, 0, 0 }
+Y[] = { 1, 8, 9, 10, 15 } The vacant cells in X[] is represented by 0 
+Output: X[] = { 1, 2, 3, 5, 6, 8, 9, 10, 15 }
+
+answer1:
+class MergeArrays {
+    void moveToEnd(int mPlusN[], int size) {
+        int i, j = size - 1;
+        for (i = size - 1; i >= 0; i--) {
+            if (mPlusN[i] != -1) {
+                mPlusN[j] = mPlusN[i];
+                j--;
+            }
+        }
+    }
+
+    void merge(int mPlusN[], int N[], int m, int n) {
+        int i = n;
+        int j = 0;
+        int k = 0;
+        while (k < (m + n)) {
+            if ((i < (m + n) && mPlusN[i] <= N[j]) || (j == n)) {
+                mPlusN[k] = mPlusN[i];
+                k++;
+                i++;
+            } else {
+                mPlusN[k] = N[j];
+                k++;
+                j++;
+            }
+        }
+    }
+
+    void printArray(int arr[], int size) {
+        int i;
+        for (i = 0; i < size; i++)
+            System.out.print(arr[i] + " ");
+
+        System.out.println("");
+    }
+
+    public static void main(String[] args) {
+    MergeArrays mergearray = new MergeArrays();
+    int X[] = {0, 2, 0, 3, 0, 5, 6, 0, 0};
+    int Y[] = {1, 8, 9, 10, 15};
+    int n = Y.length;
+    int m = X.length - n;
+    mergearray.moveToEnd(X, m + n);
+    mergearray.merge(X, Y, m, n);
+    mergearray.printArray(X, m + n);
+}
+
+}
+
+
+Q2:Find maximum sum path involving elements of given arrays
+Given two sorted arrays of integers, find a maximum sum path involving elements of both arrays whose sum is maximum. 
+We can start from either array, but we can switch between arrays only through its common elements.
+
+For example,
+
+Input: X = { 3, 6, 7, 8, 10, 12, 15, 18, 100 }
+Y = { 1, 2, 3, 5, 7, 9, 10, 11, 15, 16, 18, 25, 50 }  
+The maximum sum path is: 1 —> 2 —> 3 —> 6 —> 7 —> 9 —> 10 —> 12 —> 15 —> 16 —> 18 —> 100 
+The maximum sum is 199
+answer2:
+class MaxSumPath {
+    public static int maxSumPath(int[] X, int[] Y) {
+        int m = X.length;
+        int n = Y.length;
+
+        int i = 0, j = 0;
+        int result = 0, sumX = 0, sumY = 0;
+
+        while (i < m && j < n) {
+            if (X[i] < Y[j])
+                sumX += X[i++];
+            else if (X[i] > Y[j])
+                sumY += Y[j++];
+            else {
+                result += Math.max(sumX, sumY);
+                result += X[i];
+                sumX = 0;
+                sumY = 0;
+                i++;
+                j++;
+            }
+        }
+
+        while (i < m)
+            sumX += X[i++];
+        while (j < n)
+            sumY += Y[j++];
+
+        result += Math.max(sumX, sumY);
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] X = {3, 6, 7, 8, 10, 12, 15, 18, 100};
+        int[] Y = {1, 2, 3, 5, 7, 9, 10, 11, 15, 16, 18, 25, 50};
+        System.out.println("Maximum sum path is: " + maxSumPath(X, Y));
+    }
+}
+
+
+Q3:Write a Java Program to count the number of words in a string using HashMap.
+
+answer3:
+
+import java.util.HashMap;
+
+class WordCounter {
+    public static void countWords(String str) {
+    
+        str = str.trim();
+
+
+        String[] words = str.split("\\s+");
+
+        HashMap<String, Integer> wordFreq = new HashMap<>();
+
+
+        for (String word : words) {
+            wordFreq.put(word, wordFreq.getOrDefault(word, 0) + 1);
+        }
+
+    
+        System.out.println("Word frequencies:");
+        for (String word : wordFreq.keySet()) {
+            System.out.println(word + ": " + wordFreq.get(word));
+        }
+
+
+        System.out.println("Total number of words: " + words.length);
+    }
+
+    public static void main(String[] args) {
+        String inputString = "Java is a programming language. Java is widely used for developing applications.";
+        countWords(inputString);
+    }
+}
+
+
+Q4:Write a Java Program to find the duplicate characters in a string.
+answer4:
+import java.util.HashMap;
+
+class DuplicateCharacters {
+    public static void findDuplicates(String str) {
+    
+        str = str.replaceAll("\\s+", "").toLowerCase();
+
+        HashMap<Character, Integer> charFreq = new HashMap<>();
+
+
+        for (char ch : str.toCharArray()) {
+            charFreq.put(ch, charFreq.getOrDefault(ch, 0) + 1);
+        }
+
+
+        System.out.println("Duplicate characters:");
+        for (char ch : charFreq.keySet()) {
+            if (charFreq.get(ch) > 1) {
+                System.out.println(ch);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        String inputString = "Programming";
+        System.out.println("Input String: " + inputString);
+        findDuplicates(inputString);
+    }
+

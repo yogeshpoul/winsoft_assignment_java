@@ -55,8 +55,8 @@ class MergeArrays {
     mergearray.merge(X, Y, m, n);
     mergearray.printArray(X, m + n);
 }
-
 }
+
 
 
 Q2:Find maximum sum path involving elements of given arrays
